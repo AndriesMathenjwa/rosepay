@@ -203,7 +203,7 @@ const Dashboard = () => {
     const url = `https://gateway1.ekss.co.za/identity9.2/resources/services/enroll?AccountID=demo&AccountHash=demo@321&employeeid=${id}`;
   
     const data = new URLSearchParams();
-    data.append("Photo", capturedImage.split(",")[1]); //hi
+    data.append("Photo", capturedImage.split(",")[1]); 
   
     try {
       const response = await fetch(url, {
@@ -324,7 +324,7 @@ const Dashboard = () => {
                   }}
                   value={formData.name}
                   onChange={handleInputChange}
-                  placeholder="John"
+                  placeholder="Andries"
                   disabled
                 />
                 <TextField
@@ -336,7 +336,7 @@ const Dashboard = () => {
                   }}
                   value={formData.surname}
                   onChange={handleInputChange}
-                  placeholder="Doe"
+                  placeholder="mathenjwa"
                   disabled
                 />
                
