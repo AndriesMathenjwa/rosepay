@@ -203,7 +203,7 @@ const Dashboard = () => {
     const url = `https://gateway1.ekss.co.za/identity9.2/resources/services/enroll?AccountID=demo&AccountHash=demo@321&employeeid=${id}`;
   
     const data = new URLSearchParams();
-    data.append("Photo", capturedImage.split(",")[1]);
+    data.append("Photo", capturedImage.split(",")[1]); //hi
   
     try {
       const response = await fetch(url, {
