@@ -149,7 +149,6 @@ const Dashboard = () => {
     name: userDetails.name,
     surname: userDetails.surname,
     employeeId: userDetails.user_id,
- 
   });
 
   const [isDialogOpen, setDialogOpen] = useState(false);
@@ -158,7 +157,6 @@ const Dashboard = () => {
   const webcamRef = useRef(null);
 
   const navigate = useNavigate();
-
 
   useEffect(() => {
     if (
@@ -169,7 +167,7 @@ const Dashboard = () => {
     }
   }, [userDetails, navigate]);
 
-  /// camera 
+  /// camera
 
   const handleWebcamCapture = () => {
     setWebcamOpen(true);
@@ -200,11 +198,16 @@ const Dashboard = () => {
 
   const updateProfile = async () => {
     const id = encodeURIComponent(formData.employeeId);
-    const url = `https://gateway1.ekss.co.za/identity9.2/resources/services/enroll?AccountID=demo&AccountHash=demo@321&employeeid=${id}`;
-  
+    const name = formData.name;
+    const surname = formData.surname;
+    const email_address = formData.email_address;
+    const cell_number = formData.cell_number;
+    const idnumber = formData.idnumber;
+    const url = `https://gateway1.ekss.co.za/identity9.2/resources/services/enroll?AccountID=demo&AccountHash=demo@321&employeeid=${id}&name=${name}&surname=${surname}&email_address=${email_address}&cell_number=${cell_number}&idnumber=${idnumber}`;
+
     const data = new URLSearchParams();
-    data.append("Photo", capturedImage.split(",")[1]); 
-  
+    data.append("Photo", capturedImage.split(",")[1]);
+
     try {
       const response = await fetch(url, {
         method: "POST",
@@ -213,11 +216,11 @@ const Dashboard = () => {
         },
         body: data.toString(),
       });
-  
+
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
-  
+
       const responseData = await response.json();
       console.log("Picture successfully updated:", responseData);
       Swal.fire({
@@ -239,8 +242,6 @@ const Dashboard = () => {
     }
     console.log("Body Data Object:", data.toString());
   };
-  
-  
 
   return (
     <ThemeProvider theme={Rosetheme}>
@@ -300,7 +301,14 @@ const Dashboard = () => {
                   </Button>
                 </Box>
                 {capturedImage && (
-                  <Box sx={{ mt: 2, display: "flex", flexDirection: "column", alignItems: "center" }}>
+                  <Box
+                    sx={{
+                      mt: 2,
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                    }}
+                  >
                     <Typography variant="body2" color="textSecondary">
                       Captured Image:
                     </Typography>
@@ -339,8 +347,7 @@ const Dashboard = () => {
                   placeholder="mathenjwa"
                   disabled
                 />
-               
-               
+
                 <TextField
                   id="employeeId"
                   label="EMPLOYEE ID"
@@ -350,9 +357,48 @@ const Dashboard = () => {
                   }}
                   value={formData.employeeId}
                   onChange={handleInputChange}
-                  placeholder="123456"
-                //   disabled
+                  placeholder="123...."
+                  //   disabled
                 />
+                <TextField
+                  id="email_address"
+                  label="EMAIL ADRESS"
+                  sx={{
+                    bgcolor: "grey.200",
+                    width: "57%",
+                  }}
+                  value={formData.email_address}
+                  onChange={handleInputChange}
+                  placeholder="a@gmail.com"
+                  //   disabled
+                />
+
+                <TextField
+                  id="cell_number"
+                  label="CELL NUMBER"
+                  sx={{
+                    bgcolor: "grey.200",
+                    width: "57%",
+                  }}
+                  value={formData.cell_number}
+                  onChange={handleInputChange}
+                  placeholder="07294...."
+                  //   disabled
+                />
+
+                <TextField
+                  id="idnumber"
+                  label="ID NUMBER"
+                  sx={{
+                    bgcolor: "grey.200",
+                    width: "57%",
+                  }}
+                  value={formData.idnumber}
+                  onChange={handleInputChange}
+                  placeholder="970911...."
+                  //   disabled
+                />
+
                 <Button
                   variant="contained"
                   color="primary"
@@ -368,60 +414,69 @@ const Dashboard = () => {
       </MainContainer>
 
       <Dialog
-  open={isWebcamOpen}
-  onClose={() => setWebcamOpen(false)}
-  sx={{ marginLeft: "21%" }} 
->
-  <DialogTitle>Take a Picture</DialogTitle>
-  <DialogContent>
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      <Webcam
-        audio={false}
-        screenshotFormat="image/jpeg"
-        width={300}
-        ref={webcamRef}
-      />
-    </Box>
-  </DialogContent>
-  <DialogActions>
-    <Button onClick={() => setWebcamOpen(false)}>Cancel</Button>
-    <Button onClick={handleCapture} variant="contained" color="primary">
-      Capture
-    </Button>
-  </DialogActions>
-</Dialog>
+        open={isWebcamOpen}
+        onClose={() => setWebcamOpen(false)}
+        sx={{ marginLeft: "21%" }}
+      >
+        <DialogTitle>Take a Picture</DialogTitle>
+        <DialogContent>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Webcam
+              audio={false}
+              screenshotFormat="image/jpeg"
+              width={300}
+              ref={webcamRef}
+            />
+          </Box>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setWebcamOpen(false)}>Cancel</Button>
+          <Button onClick={handleCapture} variant="contained" color="primary">
+            Capture
+          </Button>
+        </DialogActions>
+      </Dialog>
 
-<Dialog
-  open={isDialogOpen}
-  onClose={() => handleDialogClose(false)}
-  sx={{ marginLeft: "21%" }} 
->
-  <DialogTitle>Confirm Update</DialogTitle>
-  <DialogContent>
-    <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-      {capturedImage && <img src={capturedImage} alt="Captured" width="200" />}
-      <Typography>Are you sure you want to update the profile?</Typography>
-    </Box>
-  </DialogContent>
-  <DialogActions>
-    <Button onClick={() => handleDialogClose(false)}>Cancel</Button>
-    <Button
-      onClick={() => handleDialogClose(true)}
-      variant="contained"
-      color="primary"
-    >
-      Confirm
-    </Button>
-  </DialogActions>
-</Dialog>
-
+      <Dialog
+        open={isDialogOpen}
+        onClose={() => handleDialogClose(false)}
+        sx={{ marginLeft: "21%" }}
+      >
+        <DialogTitle>Confirm Update</DialogTitle>
+        <DialogContent>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            {capturedImage && (
+              <img src={capturedImage} alt="Captured" width="200" />
+            )}
+            <Typography>
+              Are you sure you want to update the profile?
+            </Typography>
+          </Box>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => handleDialogClose(false)}>Cancel</Button>
+          <Button
+            onClick={() => handleDialogClose(true)}
+            variant="contained"
+            color="primary"
+          >
+            Confirm
+          </Button>
+        </DialogActions>
+      </Dialog>
     </ThemeProvider>
   );
 };
