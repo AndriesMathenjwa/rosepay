@@ -199,12 +199,11 @@ const Dashboard = () => {
   };
 
   const updateProfile = async () => {
-    const id = encodeURIComponent(formData.employeeId); // URL encode employeeId
+    const id = encodeURIComponent(formData.employeeId);
     const url = `https://gateway1.ekss.co.za/identity9.2/resources/services/enroll?AccountID=demo&AccountHash=demo@321&employeeid=${id}`;
   
-    // Convert data to URL-encoded format
     const data = new URLSearchParams();
-    data.append("Photo", capturedImage);
+    data.append("Photo", capturedImage.split(",")[1]);
   
     try {
       const response = await fetch(url, {
@@ -212,7 +211,7 @@ const Dashboard = () => {
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
         },
-        body: data.toString(), // Convert to string for URL-encoded format
+        body: data.toString(),
       });
   
       if (!response.ok) {
