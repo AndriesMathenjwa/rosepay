@@ -1,0 +1,28 @@
+/* .sidebar {
+    display: flex;
+  }
+  
+  .homeContent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 90vh;
+    width: 100%;
+  }
+  
+  .formContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 60%;
+  }
+
+  .customButton {
+    width: 27%; 
+    height: 45px;
+    align-self: center;
+  }
+  .lis{
+    margin: 50px
+  } */

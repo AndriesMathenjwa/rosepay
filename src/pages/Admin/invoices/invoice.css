@@ -1,0 +1,19 @@
+.invoice {
+    display: flex;
+  }
+  
+  .invoiceContent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
+    width: 100%;
+  }
+  .radio{
+    margin-top: 40px;
+  }
+
+  .crd{
+  background-color: black;
+  }
