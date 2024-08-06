@@ -236,6 +236,9 @@ const Dashboard = () => {
       setFormData({
         employeeId: "",
         capturedImage: "",
+         email_address :  "",
+         cell_number:   "",
+         idnumber :  "",
       });
     } catch (error) {
       console.error("Error updating picture:", error);
