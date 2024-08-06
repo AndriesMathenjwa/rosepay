@@ -1,18 +1,26 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import { styled, createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
 import Drawer from "../Drawers/drawer_l";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
-import { Paper, TextField } from "@mui/material";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import UserMenuButton from "../UserMenuButton";
-import Button from "@mui/material/Button";
+import {
+  Paper,
+  TextField,
+  Toolbar,
+  Typography,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from "@mui/material";
 import Swal from "sweetalert2";
-import "./CustomSwalStyles.css"; // Import custom styles
+import "./CustomSwalStyles.css";
+import UserMenuButton from "../UserMenuButton";
 
 // Customizing the theme
 const Rosetheme = createTheme({
@@ -95,6 +103,8 @@ export default function Invoice_l() {
   const [open, setOpen] = useState(true);
   const [disputeIndex, setDisputeIndex] = useState(null);
   const [disputeText, setDisputeText] = useState("");
+  const [otpDialogOpen, setOtpDialogOpen] = useState(false);
+  const [otp, setOtp] = useState("");
 
   const toggleDrawer = () => {
     setOpen(!open);
@@ -174,7 +184,7 @@ export default function Invoice_l() {
           },
         });
         setDisputeIndex(null);
-        setDisputeText(""); // Clear the text field after submission
+        setDisputeText(""); 
       } else {
         Swal.fire({
           title: "Error",
@@ -197,6 +207,21 @@ export default function Invoice_l() {
         },
       });
     }
+  };
+
+  const handleApproveClick = () => {
+    setOtpDialogOpen(true);
+  };
+
+  const handleOtpDialogClose = () => {
+    setOtpDialogOpen(false);
+  };
+
+  const handleOtpSubmit = () => {
+    console.log("OTP Submitted:", otp);
+    alert(otp)
+    setOtpDialogOpen(false);
+    setOtp("");
   };
 
   return (
@@ -244,9 +269,7 @@ export default function Invoice_l() {
                 <Typography sx={{ marginRight: "80px" }}>
                   Invoice: {invoiceId}
                 </Typography>
-                <Typography
-                  sx={{ marginLeft: "30%", marginRight: "auto" }}
-                >
+                <Typography sx={{ marginLeft: "30%", marginRight: "auto" }}>
                   Month: {month}
                 </Typography>
               </Box>
@@ -262,13 +285,14 @@ export default function Invoice_l() {
                     <Typography>Time: {item.time}</Typography>
                     <Typography>Module: {item.module}</Typography>
                     <Typography>Rate: {item.rate}</Typography>
-                    <Button
+                    {/* <Button
                       type="button"
                       variant="contained"
                       sx={{ width: "10%", bgcolor: "Green" }}
+                      onClick={handleApproveClick}
                     >
                       Approve
-                    </Button>
+                    </Button> */}
                     <Button
                       type="button"
                       variant="contained"
@@ -307,9 +331,53 @@ export default function Invoice_l() {
                 </Box>
               ))}
             </Paper>
+            <Box
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+              width="100%"
+              mt={1}
+            >
+              <Button
+                type="button"
+                variant="contained"
+                sx={{ width: "20%", bgcolor: "Green", marginTop: "15px" }}
+                onClick={handleApproveClick}
+              >
+                Approve
+              </Button>
+            </Box>
           </TabsContainer>
         </ContentContainer>
       </MainContainer>
+
+      <Dialog open={otpDialogOpen} onClose={handleOtpDialogClose} sx={{ marginLeft: "21%" }}>
+        <DialogTitle>Enter OTP</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Please enter the OTP sent to your registered mobile number.
+          </DialogContentText>
+          <TextField
+            autoFocus
+            margin="dense"
+            id="otp"
+            label="OTP"
+            type="text"
+            fullWidth
+            variant="outlined"
+            value={otp}
+            onChange={(e) => setOtp(e.target.value)}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleOtpDialogClose} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={handleOtpSubmit} color="primary">
+            Submit
+          </Button>
+        </DialogActions>
+      </Dialog>
     </ThemeProvider>
   );
 }

@@ -1,0 +1,40 @@
+.otp-container {
+    text-align: center;
+    width: 25%; 
+    margin: 0 auto; 
+    padding: 20px; 
+    border-radius: 10px; 
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.otp-area {
+    width: 70%;
+    margin: 20px auto;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.inp {
+    width: 12%;
+    padding: 5%;
+    outline: none;
+    text-align: center;
+    border: 2px solid #bdb8b8;
+}
+
+.inp:focus {
+    border: 2px solid #D81730;
+}
+
+.btn {
+    margin-top: 20px;
+    padding: 13px 20px;
+    cursor: pointer;
+    background-color: #D81730;
+    border-radius: 20px;
+    border: #D81730;
+    width: 40%;
+    color: white;
+}

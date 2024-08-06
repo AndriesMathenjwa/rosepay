@@ -20,6 +20,10 @@ import Disputes_a from './pages/Admin/disputes/Disputes_a';
 import S_Disputes from './pages/Lecturer/Disputes/send_dispute'
 import PictureUpdate from "./pages/Lecturer/Profile/PictureUpdate"
 import Invoice_l from './Components/Invoice_l/invoice_l';
+import Otp from "./Components/otp/Otp"
+import TimeTable from "./pages/Admin/timeTable/TimeTable"
+import ClassRooms from "./pages/Admin/Classrooms/ClassRooms"
+import Courses from "./pages/Admin/courses/Courses"
 
 //FINANCE
 import Finance from './pages/Finance/finance_home';
@@ -51,6 +55,10 @@ function App() {
         {/* Finance */}
         <Route path='finance' element={<Finance />} />
         <Route path='invoice_lecture' element={<Invoice_l />} />
+        <Route path='otp' element={<Otp/>} />
+        <Route path='timetable' element={<TimeTable />} />
+        <Route path='classrooms' element={< ClassRooms />} />
+        <Route path='courses' element={<Courses />} />
         
         
       </Routes>

@@ -7,6 +7,9 @@ import GroupAddIcon from '@mui/icons-material/GroupAdd';
 import GroupIcon from '@mui/icons-material/Group';
 import ConnectWithoutContactIcon from '@mui/icons-material/ConnectWithoutContact';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import TableChartIcon from '@mui/icons-material/TableChart';
+import SchoolIcon from '@mui/icons-material/School';
+import AccountBalanceIcon from '@mui/icons-material/AccountBalance';
 
 
 export const mainListItems = (
@@ -41,6 +44,30 @@ export const mainListItems = (
           <ConnectWithoutContactIcon />
         </ListItemIcon>
         <ListItemText primary="DISPUTES" />
+      </ListItemButton>
+    </Link>
+    <Link to="/timetable" style={{ textDecoration: 'none', color: 'inherit' }}>
+      <ListItemButton>
+        <ListItemIcon>
+          <TableChartIcon />
+        </ListItemIcon>
+        <ListItemText primary="TIMETABLE" />
+      </ListItemButton>
+    </Link>
+    <Link to="/classrooms" style={{ textDecoration: 'none', color: 'inherit' }}>
+      <ListItemButton>
+        <ListItemIcon>
+          <AccountBalanceIcon />
+        </ListItemIcon>
+        <ListItemText primary="CLASSROOMS" />
+      </ListItemButton>
+    </Link>
+    <Link to="/courses" style={{ textDecoration: 'none', color: 'inherit' }}>
+      <ListItemButton>
+        <ListItemIcon>
+          <SchoolIcon />
+        </ListItemIcon>
+        <ListItemText primary="COURSES" />
       </ListItemButton>
     </Link>
 

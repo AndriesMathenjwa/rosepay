@@ -3,19 +3,13 @@ import { useState } from "react";
 import {
   Box,
   Button,
-  Checkbox,
   Container,
   CssBaseline,
-  FormControl,
-  FormControlLabel,
-  Grid,
-  Link,
-  Radio,
-  RadioGroup,
   TextField,
   Typography,
   ThemeProvider,
   createTheme,
+  Link, // <-- Import Link here
 } from "@mui/material";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
@@ -50,14 +44,9 @@ function Copyright(props) {
 }
 
 function SignIn() {
-  const [role, setRole] = React.useState("");
   const [errorMessage, setErrorMessage] = React.useState("");
   const navigate = useNavigate();
   const [blinkError, setBlinkError] = useState(false);
-
-  const handleRoleChange = (event) => {
-    setRole(event.target.value);
-  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -65,7 +54,6 @@ function SignIn() {
     const payload = {
       user_id: parseInt(data.get("Employee_ID")),
       password: data.get("password"),
-      role: role,
     };
 
     try {
@@ -85,37 +73,27 @@ function SignIn() {
         localStorage.setItem("userDetails", JSON.stringify(result.UserDetails));
         if (result.UserDetails && result.UserDetails.role) {
           const userRole = result.UserDetails.role.toLowerCase();
-          const selectedRole = role.toLowerCase();
 
-          if (userRole === selectedRole) {
-            Swal.fire({
-              icon: "success",
-              title: "Login successful!",
-              showConfirmButton: false,
-              timer: 1500,
-            });
+          Swal.fire({
+            icon: "success",
+            title: "Login successful!",
+            showConfirmButton: false,
+            timer: 1500,
+          });
 
-            switch (userRole) {
-              case "admin":
-                navigate("/users");
-                break;
-              case "lecturer":
-                navigate("/lectureh");
-                break;
-              case "finance":
-                navigate("/finance");
-                break;
-              default:
-                console.warn("Unknown role:", userRole);
-                break;
-            }
-          } else {
-            setErrorMessage("You are not authorized with the selected role.");
-            setBlinkError(true);
-            setTimeout(() => {
-              setErrorMessage("");
-              setBlinkError(false);
-            }, 5000);
+          switch (userRole) {
+            case "admin":
+              navigate("/users");
+              break;
+            case "lecturer":
+              navigate("/lectureh");
+              break;
+            case "finance":
+              navigate("/finance");
+              break;
+            default:
+              console.warn("Unknown role:", userRole);
+              break;
           }
         }
       } else {
@@ -172,26 +150,6 @@ function SignIn() {
           root: {
             "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
               borderColor: "#D81730",
-            },
-          },
-        },
-      },
-      MuiRadio: {
-        styleOverrides: {
-          root: {
-            color: "#D81730",
-            "&.Mui-checked": {
-              color: "#D81730",
-            },
-          },
-        },
-      },
-      MuiCheckbox: {
-        styleOverrides: {
-          root: {
-            color: "#D81730",
-            "&.Mui-checked": {
-              color: "#D81730",
             },
           },
         },
@@ -279,32 +237,6 @@ function SignIn() {
                 style={{ width: "150px", height: "150px" }}
               />
             </Box>
-            <FormControl component="fieldset" sx={{ width: "100%" }}>
-              <RadioGroup
-                row
-                aria-labelledby="demo-row-radio-buttons-group-label"
-                name="row-radio-buttons-group"
-                value={role}
-                onChange={handleRoleChange}
-                sx={{ justifyContent: "center", marginBottom: 2 }}
-              >
-                <FormControlLabel
-                  value="finance"
-                  control={<Radio />}
-                  label="FINANCE"
-                />
-                <FormControlLabel
-                  value="admin"
-                  control={<Radio />}
-                  label="ADMIN"
-                />
-                <FormControlLabel
-                  value="lecturer"
-                  control={<Radio />}
-                  label="LECTURER"
-                />
-              </RadioGroup>
-            </FormControl>
             <Box
               component="form"
               onSubmit={handleSubmit}
@@ -344,10 +276,6 @@ function SignIn() {
                   {errorMessage}
                 </Typography>
               )}
-              {/* <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            /> */}
               <Button
                 type="submit"
                 fullWidth
@@ -356,17 +284,6 @@ function SignIn() {
               >
                 Sign In
               </Button>
-              <Grid container>
-                <Grid item xs>
-                  <Link
-                    href="#"
-                    variant="body2"
-                    sx={{ justifyContent: "center" }}
-                  >
-                    {/* Forgot password? */}
-                  </Link>
-                </Grid>
-              </Grid>
             </Box>
           </Paper>
         </Box>
